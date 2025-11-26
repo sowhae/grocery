@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+    <style>
+        body { margin: 0; font-family: Arial; background: #1a1a2e; color: white; padding: 20px; }
+        #status { font-size: 18px; margin: 20px 0; }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .pending { color: #ffaa00; }
+    </style>
+</head>
+<body>
+    <h1>VR Grocery Store - Debug Test</h1>
+    <div id="status"></div>
+    <div id="details"></div>
+    <canvas id="canvas3d" width="800" height="600"></canvas>
+
+    <script type="module">
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+
+        function log(message, type = 'pending') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `${new Date().toLocaleTimeString()} - ${message}`;
+            statusDiv.appendChild(div);
+            console.log(message);
+        }
+
+        async function test() {
+            try {
+                log('Starting tests...', 'pending');
+
+                // Test 1: Three.js
+                log('Test 1: Loading Three.js...', 'pending');
+                const THREE = await import('three');
+                log('✓ Three.js loaded successfully', 'success');
+
+                // Test 2: Create basic scene
+                log('Test 2: Creating basic 3D scene...', 'pending');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, 800/600, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas3d') });
+                renderer.setSize(800, 600);
+                scene.background = new THREE.Color(0x1a1a2e);
+
+                // Add a test cube
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                log('✓ 3D scene working! You should see a spinning cyan cube', 'success');
+
+                // Test 3: Cannon.js physics
+                log('Test 3: Loading physics engine...', 'pending');
+                const CANNON = await import('cannon-es');
+                log('✓ Physics engine loaded successfully', 'success');
+
+                // Test 4: MediaPipe Hands
+                log('Test 4: Loading MediaPipe Hands (this may take a moment)...', 'pending');
+                try {
+                    const { Hands } = await import('@mediapipe/hands');
+                    const { Camera } = await import('@mediapipe/camera_utils');
+                    log('✓ MediaPipe libraries loaded successfully', 'success');
+
+                    // Test MediaPipe initialization
+                    log('Test 5: Initializing hand tracking...', 'pending');
+                    const hands = new Hands({
+                        locateFile: (file) => {
+                            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${file}`;
+                        }
+                    });
+                    log('✓ Hand tracking object created', 'success');
+
+                    log('ALL TESTS PASSED! ✓✓✓', 'success');
+                    detailsDiv.innerHTML = `
+                        <h2 style="color: #00ff00;">All systems operational!</h2>
+                        <p>The app should work. If the main app still fails, press F12 and check the Console tab for specific errors.</p>
+                        <a href="/" style="color: #00ffff;">← Back to main app</a>
+                    `;
+
+                } catch (error) {
+                    log(`✗ MediaPipe failed: ${error.message}`, 'error');
+                    detailsDiv.innerHTML = `
+                        <h2 style="color: #ff0000;">MediaPipe Error</h2>
+                        <p>Error: ${error.message}</p>
+                        <p>This usually means:</p>
+                        <ul>
+                            <li>Network connectivity issues</li>
+                            <li>CDN blocked by firewall</li>
+                            <li>Browser compatibility issues</li>
+                        </ul>
+                        <p>Try: <code>npm install</code> then <code>npm run dev</code> again</p>
+                    `;
+                }
+
+            } catch (error) {
+                log(`✗ Test failed: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+                detailsDiv.innerHTML = `
+                    <h2 style="color: #ff0000;">Test Failed</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Stack:</strong></p>
+                    <pre style="background: #000; padding: 10px; overflow: auto;">${error.stack}</pre>
+                    <h3>Possible solutions:</h3>
+                    <ul>
+                        <li>Run: <code>npm install</code></li>
+                        <li>Clear browser cache</li>
+                        <li>Try a different browser (Chrome recommended)</li>
+                        <li>Check that Node.js and npm are installed</li>
+                    </ul>
+                `;
+            }
+        }
+
+        test();
+    </script>
+</body>
+</html>

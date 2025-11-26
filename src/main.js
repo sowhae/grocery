@@ -26,34 +26,45 @@ class GroceryStoreApp {
 
     async init() {
         try {
+            console.log('Starting initialization...');
             this.updateLoadingStatus('Setting up 3D environment...');
 
             // Initialize 3D scene
+            console.log('Creating 3D scene...');
             this.scene3D = new Scene3D();
             await this.scene3D.init();
+            console.log('3D scene created successfully');
 
             this.updateLoadingStatus('Initializing physics engine...');
 
             // Initialize physics
+            console.log('Initializing physics...');
             this.physics = new PhysicsWorld();
+            console.log('Physics initialized successfully');
 
             this.updateLoadingStatus('Building grocery store...');
 
             // Create grocery store environment
+            console.log('Building store environment...');
             this.store = new GroceryStore(this.scene3D, this.physics);
             this.store.build();
+            console.log('Store built successfully');
 
             this.updateLoadingStatus('Stocking shelves with items...');
 
             // Create grocery items
+            console.log('Creating items...');
             this.items = new GroceryItems(this.scene3D, this.physics);
             this.items.createItems();
+            console.log('Items created successfully');
 
             this.updateLoadingStatus('Initializing hand tracking...');
 
             // Initialize hand tracking
+            console.log('Starting hand tracking initialization...');
             this.handTracking = new HandTracking();
             await this.handTracking.init();
+            console.log('Hand tracking initialized successfully');
 
             this.updateLoadingStatus('Setting up gesture recognition...');
 
@@ -84,7 +95,22 @@ class GroceryStoreApp {
 
         } catch (error) {
             console.error('Initialization error:', error);
-            this.updateLoadingStatus('Error: ' + error.message);
+            console.error('Full error stack:', error.stack);
+
+            const loadingScreen = document.getElementById('loading-screen');
+            const statusElement = document.getElementById('loading-status');
+
+            if (statusElement) {
+                statusElement.innerHTML = `
+                    <div style="color: #ff4444; margin-top: 20px;">
+                        <strong>❌ Error:</strong> ${error.message}<br><br>
+                        <small>Check browser console (F12) for details</small><br><br>
+                        <button onclick="location.reload()" style="background: #00ffff; color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            Retry
+                        </button>
+                    </div>
+                `;
+            }
         }
     }
 
