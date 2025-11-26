@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+#info-panel {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+#info-panel h1 {
+    color: #667eea;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#instructions {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.instruction {
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333;
+}
+
+.instruction:last-child {
+    border-bottom: none;
+}
+
+#cart-info {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#cart-info h3 {
+    color: #2e7d32;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    background: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-item-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart-item-price {
+    color: #2e7d32;
+}
+
+#main-view {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+#webcam {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    border: 3px solid white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transform: scaleX(-1);
+    z-index: 100;
+}
+
+#hand-canvas {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    z-index: 101;
+    pointer-events: none;
+}
+
+#three-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#gesture-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+#gesture-text {
+    text-align: center;
+}
+
+.gesture-active {
+    background: rgba(102, 126, 234, 0.9) !important;
+    transform: translateX(-50%) scale(1.1) !important;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.pulse {
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cart-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Loading state */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.loading::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        content: '';
+    }
+    40% {
+        content: '.';
+    }
+    60% {
+        content: '..';
+    }
+    80%, 100% {
+        content: '...';
+    }
+}

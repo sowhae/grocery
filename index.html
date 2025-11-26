@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Grocery Store - Hand Tracking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div id="info-panel">
+            <h1>🛒 Virtual Grocery Store</h1>
+            <p class="subtitle">Control with your hands!</p>
+            <div id="instructions">
+                <div class="instruction">👆 <strong>Reach</strong> - Hover to highlight items</div>
+                <div class="instruction">✊ <strong>Grab</strong> - Close fist to pick up</div>
+                <div class="instruction">🤚 <strong>Swipe</strong> - Toss items into cart</div>
+                <div class="instruction">🤏 <strong>Pinch</strong> - Rotate and inspect</div>
+            </div>
+            <div id="cart-info">
+                <h3>Shopping Cart (<span id="cart-count">0</span> items)</h3>
+                <div id="cart-items"></div>
+            </div>
+        </div>
+
+        <div id="main-view">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="hand-canvas"></canvas>
+            <canvas id="three-canvas"></canvas>
+
+            <div id="gesture-indicator">
+                <div id="gesture-text">Ready</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <!-- Three.js and Cannon.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.min.js"></script>
+
+    <!-- Main Application -->
+    <script src="main.js"></script>
+</body>
+</html>
