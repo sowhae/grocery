@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#canvas3d {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#webcam {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 200px;
+    height: 150px;
+    border: 3px solid rgba(0, 255, 255, 0.6);
+    border-radius: 10px;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    transform: scaleX(-1);
+}
+
+/* UI Overlay */
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.hint-panel, .info-panel {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+#gesture-hint {
+    top: 20px;
+    left: 20px;
+    min-width: 280px;
+}
+
+#gesture-hint h3 {
+    color: #00ffff;
+    margin-bottom: 12px;
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.gesture-item {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.gesture-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    min-width: 30px;
+}
+
+.gesture-item strong {
+    color: #00ffff;
+}
+
+#cart-info {
+    bottom: 20px;
+    left: 20px;
+    min-width: 200px;
+}
+
+#cart-info h3 {
+    color: #00ff88;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+}
+
+#cart-count {
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#status-info {
+    bottom: 20px;
+    right: 20px;
+    min-width: 250px;
+}
+
+.status-indicator {
+    font-size: 20px;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+}
+
+#hand-indicator.active {
+    color: #00ff00;
+}
+
+#hand-indicator.inactive {
+    color: #ff4444;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Interaction Feedback */
+#interaction-feedback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 0 0 20px currentColor;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+#interaction-feedback.show {
+    opacity: 1;
+}
+
+/* Loading Screen */
+#loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    text-align: center;
+}
+
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(0, 255, 255, 0.2);
+    border-top: 8px solid #00ffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 30px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader h2 {
+    color: #00ffff;
+    font-size: 32px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.loader p {
+    color: #88ccff;
+    font-size: 16px;
+}
+
+/* VR-style glow effects */
+.glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6),
+                0 0 40px rgba(0, 255, 255, 0.4),
+                inset 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.glow-green {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6),
+                0 0 40px rgba(0, 255, 136, 0.4),
+                inset 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #webcam {
+        width: 150px;
+        height: 112px;
+    }
+
+    .hint-panel, .info-panel {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    #gesture-hint {
+        min-width: 220px;
+    }
+
+    .gesture-icon {
+        font-size: 20px;
+    }
+}

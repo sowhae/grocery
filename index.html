@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D VR Grocery Store - Hand Tracking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Video element for webcam (hidden) -->
+        <video id="webcam" autoplay playsinline></video>
+
+        <!-- Three.js canvas -->
+        <canvas id="canvas3d"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-overlay">
+            <div id="gesture-hint" class="hint-panel">
+                <h3>✋ Gesture Controls</h3>
+                <div class="gesture-item">
+                    <span class="gesture-icon">👊</span>
+                    <span>Close fist to <strong>GRAB</strong> items</span>
+                </div>
+                <div class="gesture-item">
+                    <span class="gesture-icon">🤚</span>
+                    <span>Open hand to <strong>RELEASE</strong></span>
+                </div>
+                <div class="gesture-item">
+                    <span class="gesture-icon">👌</span>
+                    <span>Pinch to <strong>ROTATE</strong> & inspect</span>
+                </div>
+                <div class="gesture-item">
+                    <span class="gesture-icon">💨</span>
+                    <span>Swipe fast to <strong>TOSS</strong> to cart</span>
+                </div>
+            </div>
+
+            <div id="cart-info" class="info-panel">
+                <h3>🛒 Shopping Cart</h3>
+                <div id="cart-items">Items: <span id="cart-count">0</span></div>
+            </div>
+
+            <div id="status-info" class="info-panel">
+                <div id="hand-status">
+                    <span class="status-indicator" id="hand-indicator">●</span>
+                    <span id="hand-text">Initializing hand tracking...</span>
+                </div>
+            </div>
+
+            <div id="interaction-feedback" class="feedback"></div>
+        </div>
+
+        <!-- Loading screen -->
+        <div id="loading-screen">
+            <div class="loader">
+                <div class="spinner"></div>
+                <h2>Loading VR Grocery Store...</h2>
+                <p id="loading-status">Initializing 3D environment</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

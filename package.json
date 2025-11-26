@@ -1,0 +1,20 @@
+{
+  "name": "3d-grocery-store-vr",
+  "version": "1.0.0",
+  "description": "Immersive 3D virtual grocery store with webcam hand tracking",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/hands": "^0.4.1646424915",
+    "cannon-es": "^0.20.0",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
