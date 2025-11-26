@@ -118,10 +118,10 @@ class VirtualGroceryStore {
         this.scene.background = new THREE.Color(0xf0f0f0);
         this.scene.fog = new THREE.Fog(0xf0f0f0, 10, 50);
 
-        // Camera
+        // Camera (MOVED CLOSER for better view)
         this.threeCamera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-        this.threeCamera.position.set(0, 2, 8);
-        this.threeCamera.lookAt(0, 1, 0);
+        this.threeCamera.position.set(0, 2.5, 5);
+        this.threeCamera.lookAt(0, 2, 0);
 
         // Renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -154,14 +154,14 @@ class VirtualGroceryStore {
         spotLight.penumbra = 0.3;
         this.scene.add(spotLight);
 
-        // Hand cursor visualization
-        const cursorGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        // Hand cursor visualization (BIGGER and more visible)
+        const cursorGeometry = new THREE.SphereGeometry(0.2, 16, 16);
         const cursorMaterial = new THREE.MeshStandardMaterial({
             color: 0x00ff00,
             emissive: 0x00ff00,
-            emissiveIntensity: 0.5,
+            emissiveIntensity: 0.7,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.8
         });
         this.handCursor = new THREE.Mesh(cursorGeometry, cursorMaterial);
         this.handCursor.visible = false;
@@ -225,11 +225,11 @@ class VirtualGroceryStore {
             metalness: 0.1
         });
 
-        // Back wall shelves
+        // Back wall shelves (MOVED CLOSER from z=-3 to z=-0.5)
         for (let row = 0; row < 3; row++) {
             const shelfGeometry = new THREE.BoxGeometry(8, 0.1, 0.8);
             const shelf = new THREE.Mesh(shelfGeometry, shelfMaterial);
-            shelf.position.set(0, 1 + row * 1.2, -3);
+            shelf.position.set(0, 1 + row * 1.2, -0.5);
             shelf.castShadow = true;
             shelf.receiveShadow = true;
             this.scene.add(shelf);
@@ -238,7 +238,7 @@ class VirtualGroceryStore {
             const supportGeometry = new THREE.BoxGeometry(0.1, 1.2, 0.8);
             for (let i = -1; i <= 1; i++) {
                 const support = new THREE.Mesh(supportGeometry, shelfMaterial);
-                support.position.set(i * 3.5, 0.6 + row * 1.2, -3);
+                support.position.set(i * 3.5, 0.6 + row * 1.2, -0.5);
                 support.castShadow = true;
                 this.scene.add(support);
             }
@@ -247,26 +247,26 @@ class VirtualGroceryStore {
 
     createGroceryItems() {
         const items = [
-            // Row 1 - Bottom shelf
-            { name: '🥛 Milk', color: 0xFFFFFF, pos: [-3, 1.3, -2.5], shape: 'box', size: [0.3, 0.6, 0.3], price: '$3.99' },
-            { name: '🍞 Bread', color: 0xDEB887, pos: [-1.5, 1.3, -2.5], shape: 'box', size: [0.4, 0.3, 0.3], price: '$2.49' },
-            { name: '🧀 Cheese', color: 0xFFD700, pos: [0, 1.3, -2.5], shape: 'box', size: [0.3, 0.3, 0.3], price: '$4.99' },
-            { name: '🥚 Eggs', color: 0xFFF8DC, pos: [1.5, 1.3, -2.5], shape: 'box', size: [0.4, 0.2, 0.4], price: '$3.49' },
-            { name: '🧈 Butter', color: 0xFFE4B5, pos: [3, 1.3, -2.5], shape: 'box', size: [0.25, 0.2, 0.25], price: '$4.29' },
+            // Row 1 - Bottom shelf (BIGGER sizes, CLOSER position)
+            { name: '🥛 Milk', color: 0xFFFFFF, pos: [-3, 1.3, 0], shape: 'box', size: [0.5, 0.9, 0.5], price: '$3.99' },
+            { name: '🍞 Bread', color: 0xDEB887, pos: [-1.5, 1.3, 0], shape: 'box', size: [0.6, 0.5, 0.5], price: '$2.49' },
+            { name: '🧀 Cheese', color: 0xFFD700, pos: [0, 1.3, 0], shape: 'box', size: [0.5, 0.5, 0.5], price: '$4.99' },
+            { name: '🥚 Eggs', color: 0xFFF8DC, pos: [1.5, 1.3, 0], shape: 'box', size: [0.6, 0.35, 0.6], price: '$3.49' },
+            { name: '🧈 Butter', color: 0xFFE4B5, pos: [3, 1.3, 0], shape: 'box', size: [0.4, 0.35, 0.4], price: '$4.29' },
 
-            // Row 2 - Middle shelf
-            { name: '🍎 Apples', color: 0xFF4444, pos: [-3, 2.5, -2.5], shape: 'sphere', size: 0.2, price: '$1.99' },
-            { name: '🍊 Oranges', color: 0xFF8C00, pos: [-1.5, 2.5, -2.5], shape: 'sphere', size: 0.2, price: '$2.29' },
-            { name: '🍌 Bananas', color: 0xFFFF00, pos: [0, 2.5, -2.5], shape: 'box', size: [0.5, 0.15, 0.15], price: '$1.49' },
-            { name: '🍇 Grapes', color: 0x9370DB, pos: [1.5, 2.5, -2.5], shape: 'sphere', size: 0.18, price: '$3.99' },
-            { name: '🍓 Strawberries', color: 0xFF69B4, pos: [3, 2.5, -2.5], shape: 'box', size: [0.3, 0.2, 0.3], price: '$4.49' },
+            // Row 2 - Middle shelf (BIGGER sizes, CLOSER position)
+            { name: '🍎 Apples', color: 0xFF4444, pos: [-3, 2.5, 0], shape: 'sphere', size: 0.35, price: '$1.99' },
+            { name: '🍊 Oranges', color: 0xFF8C00, pos: [-1.5, 2.5, 0], shape: 'sphere', size: 0.35, price: '$2.29' },
+            { name: '🍌 Bananas', color: 0xFFFF00, pos: [0, 2.5, 0], shape: 'box', size: [0.7, 0.25, 0.25], price: '$1.49' },
+            { name: '🍇 Grapes', color: 0x9370DB, pos: [1.5, 2.5, 0], shape: 'sphere', size: 0.32, price: '$3.99' },
+            { name: '🍓 Strawberries', color: 0xFF69B4, pos: [3, 2.5, 0], shape: 'box', size: [0.5, 0.35, 0.5], price: '$4.49' },
 
-            // Row 3 - Top shelf
-            { name: '🥫 Soup', color: 0xCD5C5C, pos: [-3, 3.7, -2.5], shape: 'cylinder', size: [0.15, 0.4], price: '$2.99' },
-            { name: '🍝 Pasta', color: 0xF4A460, pos: [-1.5, 3.7, -2.5], shape: 'box', size: [0.3, 0.4, 0.2], price: '$1.99' },
-            { name: '🥣 Cereal', color: 0xFFB6C1, pos: [0, 3.7, -2.5], shape: 'box', size: [0.4, 0.5, 0.2], price: '$3.99' },
-            { name: '☕ Coffee', color: 0x8B4513, pos: [1.5, 3.7, -2.5], shape: 'cylinder', size: [0.15, 0.4], price: '$8.99' },
-            { name: '🍪 Cookies', color: 0xD2691E, pos: [3, 3.7, -2.5], shape: 'box', size: [0.35, 0.25, 0.25], price: '$3.49' }
+            // Row 3 - Top shelf (BIGGER sizes, CLOSER position)
+            { name: '🥫 Soup', color: 0xCD5C5C, pos: [-3, 3.7, 0], shape: 'cylinder', size: [0.25, 0.6], price: '$2.99' },
+            { name: '🍝 Pasta', color: 0xF4A460, pos: [-1.5, 3.7, 0], shape: 'box', size: [0.5, 0.6, 0.35], price: '$1.99' },
+            { name: '🥣 Cereal', color: 0xFFB6C1, pos: [0, 3.7, 0], shape: 'box', size: [0.6, 0.75, 0.35], price: '$3.99' },
+            { name: '☕ Coffee', color: 0x8B4513, pos: [1.5, 3.7, 0], shape: 'cylinder', size: [0.25, 0.6], price: '$8.99' },
+            { name: '🍪 Cookies', color: 0xD2691E, pos: [3, 3.7, 0], shape: 'box', size: [0.55, 0.4, 0.4], price: '$3.49' }
         ];
 
         items.forEach((item, index) => {
@@ -410,9 +410,9 @@ class VirtualGroceryStore {
 
         // Map normalized coordinates (0-1) to 3D space
         // Flip X for mirror effect
-        const x = (1 - indexTip.x) * 10 - 5; // Map to -5 to 5
-        const y = (1 - indexTip.y) * 5 + 0.5; // Map to 0.5 to 5.5
-        const z = indexTip.z * -3; // Map depth
+        const x = (1 - indexTip.x) * 12 - 6; // Map to -6 to 6 (increased range)
+        const y = (1 - indexTip.y) * 6 + 0.5; // Map to 0.5 to 6.5 (increased range)
+        const z = indexTip.z * -8 + 1; // Map depth with much larger range (deeper reach)
 
         this.previousHandPosition.copy(this.handPosition);
         this.handPosition.set(x, y, z);
@@ -513,14 +513,14 @@ class VirtualGroceryStore {
             this.grabbedItem = null;
         }
 
-        // Highlight items near hand
+        // Highlight items near hand (MUCH larger range)
         this.groceryItems.forEach(item => {
             if (item.isInCart) return;
 
             const distance = this.handPosition.distanceTo(item.mesh.position);
-            if (distance < 0.8) {
-                // Glow effect
-                item.outline.material.opacity = Math.max(0, 0.5 - distance * 0.5);
+            if (distance < 2.5) {
+                // Glow effect with smooth falloff
+                item.outline.material.opacity = Math.max(0, 0.8 - distance * 0.3);
             } else {
                 item.outline.material.opacity = 0;
             }
@@ -528,9 +528,9 @@ class VirtualGroceryStore {
     }
 
     handleGrab() {
-        // Find nearest item
+        // Find nearest item (MUCH larger grab range)
         let nearest = null;
-        let minDist = 0.5;
+        let minDist = 2.0; // Increased from 0.5 to 2.0
 
         this.groceryItems.forEach(item => {
             if (item.isInCart) return;
@@ -595,9 +595,9 @@ class VirtualGroceryStore {
             // Start pinch
             this.isPinching = true;
 
-            // Find nearest item to inspect
+            // Find nearest item to inspect (LARGER range)
             let nearest = null;
-            let minDist = 1.0;
+            let minDist = 2.0; // Increased from 1.0 to 2.0
 
             this.groceryItems.forEach(item => {
                 if (item.isInCart) return;
